@@ -43,7 +43,7 @@ export default (api: IApi) => {
               previewerProps: {
                 sources: {
                   'demo.vue': {
-                    path: srcVueAbsPath,
+                    path: srcVueAbsPath..replace(/\\/g, '/'), // 防止windows上获取的路径是反斜杠的情况
                   },
                 },
                 dependencies: {},
