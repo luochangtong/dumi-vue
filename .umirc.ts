@@ -11,8 +11,13 @@ export default defineConfig({
   outputPath: 'docs-dist',
   // more config: https://d.umijs.org/config
   plugins: [path.resolve('plugin/plugin.ts')],
+  alias: {
+    // 'COMPONENTS/Avatar': '@components/BC/Avatar', // 这里可以修改import,
+    // 'foo': 'xx/xx/foo', // import 'foo' 将变为 import 'xx/xx/foo'
+  },
   resolve: {
     includes: ['src', 'docs'],
+    previewLangs: ['.vue'],
   },
   dynamicImportSyntax: {},
   nodeModulesTransform: {
@@ -38,6 +43,12 @@ export default defineConfig({
     ],
   ],
   chainWebpack(config, { webpack }) {
+
+    // 支持识别.vue，index.vue，无需手动输入xxx/index.vue
+    config.resolve.extensions.delete('.tsx');
+    config.resolve.extensions.add('.vue');
+    config.resolve.extensions.add('.tsx');
+    
     // alias
     config.module
       .rule('vue')
